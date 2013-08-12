@@ -11,6 +11,7 @@ class Game < ActiveRecord::Base
   # (such as users submitting requests with web browsers).
   attr_accessible :board
 
+  default_scope :order => 'id ASC'
   validates :board, :presence => true
 
   # Initializes the object with a board, made up of a two dimensional array of
@@ -67,15 +68,19 @@ class Game < ActiveRecord::Base
     end
   end
 
+  def game_over?
+    winner? || num_turns > 8
+  end
+
   # Checks if there is a winner.
   # @return [Boolean] returns true if there is a winner, false otherwise
   # Calls on private methods below
-  def winner?
-    check_rows_for_winner(previous_player) || check_columns_for_winner(previous_player) || check_diagonals_for_winner(previous_player)
+  def winner?(player=previous_player)
+    check_rows_for_winner(player) || check_columns_for_winner(player) || check_diagonals_for_winner(player)
   end
 
   # The below methods can only be accessed by methods in this class
-  # private
+  private
 
   # Establishes winner in row
   def check_rows_for_winner(player)
