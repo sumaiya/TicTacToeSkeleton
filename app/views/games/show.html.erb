@@ -2,26 +2,23 @@
 <!-- TODO -->
 
 <br/>
-
-<h1><!-- TODO --></h1>
+<title>TicTacToe | Play Game</title>
+<h1>Play Game</h1>
 
 <table id='board'>
   <!-- iterate through each array in board, grabs the array and the index -->
-  <%# <!-- TODO --> %>
+  <% @game.board.each_with_index do |row, r_index| %>
     <tr>
-     <!-- iterate through the row and column to place the coordinates on the board -->
-      <%# <!-- TODO -->  %>
+      <p>
+      <!-- iterate through the row 
+     and column to place the coordinates on the board -->
+      <% row.each_with_index do |column, c_index| %>
         <td class="<%= create_cell_class(row, column) %>" >
-          <%# <!-- TODO -->  %>
-            <%#= <!-- TODO -->  %>
-          <%# <!-- TODO -->  %>
-          <!-- render partial here! -->
-            <%#= <!-- TODO -->  %>
-          <%# <!-- TODO -->  %>
+          <%= render 'board_form', game: @game, row: r_index, column: c_index %>
         </td>
-      <%# <!-- TODO -->  %>
+      <% end  %>
+    </p>
     </tr>
-  <%# <!-- TODO -->  %>
-
+  <% end %>
 </table>
 

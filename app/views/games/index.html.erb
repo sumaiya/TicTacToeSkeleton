@@ -1,9 +1,16 @@
 <div class="center hero-unit">
-<h1><!-- TODO --></h1>
- <%#= link_to "TODO", new_path, class: "btn btn-large primary" %>
+<h1>TicTacToe</h1>
+ <%= link_to "Start Game!", new_path, class: "btn btn-large btn-primary" %>
  </div>
 
+
 <!-- USE THIS TO VIEW ALL THE GAMES PLAYED SO FAR -->
-<%# @games.each do |game| %>
-<!--<%#= game.inspect %>-->
-<%# end %>
+<h4>View old games:</h4>
+
+<ul>
+<% @games.each do |game| %>
+	<li>
+	<%= link_to game.id, game_path(id:game.id), class: 'btn btn-inverse'%>
+	</li>
+<% end %>
+</ul>

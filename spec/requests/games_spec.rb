@@ -35,9 +35,7 @@ describe "Games" do
     it_should_behave_like "all games pages"
 
     it "should show the updated board when a square is clicked" do
-      # TODO This button with likely eventually have a different name
-      click_button '0, 0'
-
+      click_button ' '
       page.should have_selector 'td', text: 'x'
     end
   end

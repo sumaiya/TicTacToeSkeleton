@@ -36,19 +36,23 @@ class Game < ActiveRecord::Base
   # 
   # use helpers/games_helper to see board in the terminal
   def update_board(player, row, column)
-    board[row][column] = player
-    
-  end
+    if board[row][column] == ('x' || 'o')
+      raise ArgumentError
+    else
+      board[row][column] = player
+    end
+    self.save
+   end
 
   # Returns the current_player
   # @return [String] 'x' or 'o'
   def current_player
-    # TODO
+    num_turns.even? ? "x" : "o"
   end
 
   # Checks for previous_player by comparing current_player
   def previous_player
-    # TODO
+    num_turns.odd? ? "x" : "o"  
   end
 
   # Plays the game
@@ -57,33 +61,66 @@ class Game < ActiveRecord::Base
   # updates the board
   # call #WINNER AFTER each move, not before
   def play(row, column)
-    # TODO
+    update_board(current_player, row, column)
+    if winner?
+      return "Player #{previous_player} is the winner!"
+    end
   end
 
   # Checks if there is a winner.
   # @return [Boolean] returns true if there is a winner, false otherwise
   # Calls on private methods below
   def winner?
-    # TODO
+    check_rows_for_winner(previous_player) || check_columns_for_winner(previous_player) || check_diagonals_for_winner(previous_player)
   end
 
-
   # The below methods can only be accessed by methods in this class
-  private
+  # private
 
   # Establishes winner in row
-  def check_rows_for_winner
-    # TODO
+  def check_rows_for_winner(player)
+    board.each do |row|
+      return true if row.all? {|cell| cell == player}
+    end
+    return false
   end
 
   # Establishes winner in columns
-  def check_columns_for_winner
-    # TODO
+  def check_columns_for_winner(player)
+    count = 0
+    for col in 0...3
+      for row in 0...3
+        count += 1 if board[row][col] == player
+        return true if count == 3
+      end
+      count = 0
+    end
+    return false
   end
 
   # Establishes winner diagonally
-  def check_diagonals_for_winner
-    # TODO
+  def check_diagonals_for_winner(player)
+    count = 0
+    for pos in 0...3
+        count += 1 if board[pos][pos] == player
+        return true if count == 3
+    end
+    count = 0
+    for pos in 0...3
+        count += 1 if board[pos][2-pos] == player
+        return true if count == 3
+    end
+    return false
+  end
+
+  def num_turns
+    count = 0
+    for row in 0...3
+      for col in 0...3
+        count += 1 if board[row][col] == "x" || board[row][col] == "o"
+      end
+    end
+    count
   end
 
 end

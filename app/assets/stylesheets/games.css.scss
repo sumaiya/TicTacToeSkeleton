@@ -1,3 +1,24 @@
 // Place all the styles related to the StaticPages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+table#board {
+	font-size: 20px;
+	td {
+		border: 3px solid black;
+			width: 100px;
+			height: 100px;
+			overflow: hidden;
+		span {
+			font-size: 40px;
+		}
+		input.btn {
+			width: 82px;
+			height: 72px;
+		}
+		label.btn {
+			width: 50px;
+			height: 50px;
+		}
+	}
+}

@@ -71,8 +71,7 @@ describe Game do
 			@test_game.play(1,0)
 			@test_game.play(0,1)
 			@test_game.play(1,1)
-			@test_game.play(0,2)
-			@test_game.play(1,2).should == "Player x is the winner!"
+			@test_game.play(0,2).should == "Player x is the winner!"
 		end
 
     it "should determine that play, 'o', won with a message!" do
@@ -81,23 +80,27 @@ describe Game do
       @test_game.play(0,1)
       @test_game.play(1,1)
       @test_game.play(0,2)
-      @test_game.play(2,2)
-      @test_game.play(1,2).should == "Player o is the winner!"
+      @test_game.play(2,2).should == "Player o is the winner!"
     end
 	end 
 
   describe "winner?" do
     it "should be true if the first row is filled with the same letter" do
       @test_game.update_board('x', 0, 0)
+      @test_game.update_board('o', 1, 0)
       @test_game.update_board('x', 0, 1)
+      @test_game.update_board('o', 1, 1)
       @test_game.update_board('x', 0, 2)
 
       @test_game.winner?.should == true
     end
     
     it "should be true if the second row is filled with the same letter" do
+      @test_game.update_board('x', 0, 0)
       @test_game.update_board('o', 1, 0)
+      @test_game.update_board('x', 2, 0)
       @test_game.update_board('o', 1, 1)
+      @test_game.update_board('x', 2, 1)
       @test_game.update_board('o', 1, 2)
 
       @test_game.winner?.should == true
